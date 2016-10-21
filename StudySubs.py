@@ -9,8 +9,6 @@ Stand-alone Japanese SRS creator
 
 import tkinter as tk
 from tkinter import filedialog, messagebox
-#import tkMessageBox
-#import sys
 import os
 import tinysegmenter
 import csv
@@ -31,7 +29,7 @@ class App:
         self.root.destroy()
         return
     def openfile(self):
-        file = filedialog.askopenfilename()#(mode='r', **self.file_opt)
+        file = filedialog.askopenfilename()
         f = open(file,'r')
         filename, _ = os.path.splitext(file)
         csvf = open(filename + '.csv','w+')
