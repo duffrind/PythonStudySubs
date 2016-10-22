@@ -35,7 +35,6 @@ class App:
         csvf = open(filename + '.csv','w+')
         writer = csv.writer(csvf,delimiter='\t')
         word_set = set()
-        f
         foo = f.read()
         try:
             f = open(file,'r',encoding='UTF8')
