@@ -37,13 +37,33 @@ class App:
         word_set = set()
         foo = f.read()
         try:
-            f = open(file,'r',encoding='UTF8')
+            f = open(file,'r',encoding=foo.encoding)
             ftext = f.read()
             m = re.findall("""[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf\uff62-\uff9f].*\n?""" , ftext)
         except:
-            f = open(file,'r',encoding='UTF16')
-            ftext = f.read()
-            m = re.findall("""[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf\uff62-\uff9f].*\n?""" , ftext)
+            try:
+                f = open(file,'r',encoding='UTF8')
+                ftext = f.read()
+                m = re.findall("""[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf\uff62-\uff9f].*\n?""" , ftext)
+            except:
+                try:
+                    f = open(file,'r',encoding='UTF16')
+                    ftext = f.read()
+                    m = re.findall("""[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf\uff62-\uff9f].*\n?""" , ftext)
+                except:
+                    try:
+                        f = open(file,'r',encoding='SHIFT-JIS')
+                        ftext = f.read()
+                        m = re.findall("""[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf\uff62-\uff9f].*\n?""" , ftext)
+                    except:
+                        try:
+                            f = open(file,'r',encoding='EUC-JP')
+                            ftext = f.read()
+                            m = re.findall("""[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf\uff62-\uff9f].*\n?""" , ftext)
+                            except:
+                                f = open(file,'r',encoding='UTF32')
+                                ftext = f.read()
+                                m = re.findall("""[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf\uff62-\uff9f].*\n?""" , ftext)
         for line in m:
             word_set = word_set | set(segmenter.tokenize(line))
         with open('word_dictionary.json', 'r') as f1:
